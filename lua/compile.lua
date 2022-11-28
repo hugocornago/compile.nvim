@@ -30,6 +30,15 @@ local function go_build()
   return build("go", { "build" })
 end
 
+local function cpp_build()
+  -- Take the filename without extension and path.
+  local fileName = vim.fn.expand("%:t:r")
+  -- Remove any "-main" from the filename
+  local projectName = string.gsub(fileName, "-main", "")
+
+  return build("make", { projectName })
+end
+
 local function python_run()
   local curr_filename = vim.fn.expand('%')
   return build("python", { curr_filename })
@@ -64,6 +73,7 @@ local filetype_compile = {
     ["rust"] = cargo_build,
     ["go"] = go_build,
     ["python"] = python_run,
+    ["cpp"] = cpp_build,
 }
 
 -- main function that gets exported

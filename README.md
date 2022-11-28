@@ -5,6 +5,7 @@ So instead I build my own plugin to do it for me of course!
 ## Languages supported
 - Rust
 - Go
+- Cpp (make)
 
 ## How to use 
 Just do `:Compile` and let it do the rest.
