@@ -68,6 +68,14 @@ local function spawn_buffer(compile_func)
   api.nvim_command('set noma')
 end
 
+local function spawn_compiler(compile_func)
+  local res = compile_func()
+  if type(res) == "table" then
+    api.nvim_echo({{table.concat(res, '\n')}}, true, {})
+    return
+  end
+  api.nvim_echo({{res}}, true, {})
+end
 -- table to match filetypes
 local filetype_compile = {
     ["rust"] = cargo_build,
@@ -80,7 +88,7 @@ local filetype_compile = {
 local function compile()
     local ftype = vim.bo.filetype
     if filetype_compile[ftype] then
-        spawn_buffer(filetype_compile[ftype])
+        spawn_compiler(filetype_compile[ftype])
     end
 end
 
